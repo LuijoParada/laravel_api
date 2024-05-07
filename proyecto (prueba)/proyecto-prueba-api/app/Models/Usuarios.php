@@ -21,6 +21,7 @@ class Usuarios extends Model
         'direccion',
         'estado',
         'ciudad',
+        'nacimiento',
         'rol'
     ];
 }

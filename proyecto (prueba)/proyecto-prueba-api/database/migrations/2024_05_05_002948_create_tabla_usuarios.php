@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('direccion')->nullable();
             $table->string('estado')->nullable();
             $table->string('ciudad')->nullable();
+            $table->string('nacimiento')->nullable();
             $table->string('rol')->default('user') ;
             $table->timestamps();
         });

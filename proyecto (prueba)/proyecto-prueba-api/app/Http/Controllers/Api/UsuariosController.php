@@ -34,7 +34,8 @@ class UsuariosController extends Controller
             'tlf' => 'sometimes|required|unique:tabla_usuarios',
             'direccion' => 'sometimes|required',
             'estado' => 'sometimes|required',
-            'ciudad' => 'sometimes|required'
+            'ciudad' => 'sometimes|required',
+            'nacimiento' => 'sometimes|required'
         ]);
 
         if($validator->fails()){
@@ -55,7 +56,8 @@ class UsuariosController extends Controller
             'tlf' => $request->tlf ,// Only set if provided
             'direccion' => $request->direccion,// Only set if provided
             'estado' => $request->estado, // Only set if provided
-            'ciudad' => $request->ciudad // Only set if provided
+            'ciudad' => $request->ciudad, // Only set if provided
+            'nacimiento' => $request->nacimiento // Only set if provided
         ]);
 
         if(!$usuario){
@@ -71,6 +73,7 @@ class UsuariosController extends Controller
         ];
         return response()->json($data, 201);
     }
+
     public function show($id)
     {
         $usuario = Usuarios::find($id);
@@ -125,7 +128,9 @@ class UsuariosController extends Controller
             'tlf' => 'sometimes|required|unique:tabla_usuarios,tlf,'.$usuario->id,
             'direccion' => 'sometimes|required',
             'estado' => 'sometimes|required',
-            'ciudad' => 'sometimes|required'
+            'ciudad' => 'sometimes|required',
+            'nacimiento' => 'sometimes|required'
+
         ]);
 
         if($validator->fails()){
@@ -146,6 +151,7 @@ class UsuariosController extends Controller
         $usuario->direccion = $request->direccion;// Only set if provided
         $usuario->estado = $request->estado; // Only set if provided
         $usuario->ciudad = $request->ciudad; // Only set if provided
+        $usuario->nacimiento = $request->nacimiento; // Only set if provided
         $usuario->save();
         $data = [
             'message' => 'Usuario actualizado',
@@ -174,7 +180,8 @@ class UsuariosController extends Controller
             'tlf' => 'sometimes|required|unique:tabla_usuarios,tlf,'.$usuario->id,
             'direccion' => 'sometimes|required',
             'estado' => 'sometimes|required',
-            'ciudad' => 'sometimes|required'
+            'ciudad' => 'sometimes|required',
+            'nacimiento' => 'sometimes|required'
         ]);
 
         if($validator->fails()){
@@ -213,6 +220,9 @@ class UsuariosController extends Controller
         }
         if($request->has('ciudad')){
             $usuario->ciudad = $request->ciudad;
+        }
+        if($request->has('nacimiento')){
+            $usuario->nacimiento = $request->nacimiento;
         }
         $usuario->save();
         $data = [
