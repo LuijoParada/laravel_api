@@ -11,3 +11,4 @@ Route::post('usuarios', [UsuariosController::class, 'store']);
 Route::put('usuarios/{id}', [UsuariosController::class, 'update']);
 Route::patch('usuarios/{id}', [UsuariosController::class, 'updatePartial']);
 Route::delete('usuarios/{id}', [UsuariosController::class, 'destroy']);
+Route::post('usuarios/login', [UsuariosController::class, 'login']);

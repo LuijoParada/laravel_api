@@ -232,4 +232,37 @@ class UsuariosController extends Controller
         ];
         return response()->json($data, 200);
     }
+    // crear funcion que al dar correo y contraseña devuelva el usuario
+
+        public function login(Request $request){
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required'
+            ]);
+    
+            if($validator->fails()){
+                //obtengo el mensaje de error del validator
+                $errors = $validator->errors();
+                $data = [
+                    'message' => 'Error en la validacion de el usuario'.$errors,
+                    'status'=> 400
+                ];
+                return response()->json($data, 400);
+            }
+            $usuario = Usuarios::where('email', $request->email)->where('password', $request->password)->first();
+        //    dd($request);
+        
+            if(!$usuario){
+                $data = [
+                    'message' => 'Usuario no encontrado',
+                    'status'=> 404
+                ];
+                return response()->json($data, 404);
+            }
+            $data = [
+                'usuario' => $usuario,
+                'status'=> 200
+            ];
+            return response()->json($data, 200);
+        }
 }
