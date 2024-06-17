@@ -58,6 +58,27 @@ class VideosController extends Controller
         ];
         return response()->json($data, 200);
     }
+
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName();
+
+            $filename = pathinfo($filename, PATHINFO_FILENAME);
+            $name_file = str_replace(' ', '_', $filename);
+
+            $extension = $file->getClientOriginalExtension();
+
+            $picture = date('His') . '-' . $name_file . '.' . $extension;
+            $file->move(public_path('videos'), $picture);
+
+            return response()->json(['response' => $request], 200);
+        }
+
+        return response()->json(['message' => 'No file uploaded'], 400);
+    }
+
     /*funcion para actualizar */
     public function update(Request $request, $id){
         $video = Videos::find($id);

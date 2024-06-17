@@ -32,6 +32,7 @@ Route::delete('videos/{id}', [VideosController::class, 'destroy']);
 Route::get('videos/likes/{id}', [VideosController::class, 'showLikes']);
 Route::get('videos/dislikes/{id}', [VideosController::class, 'showDislikes']);
 Route::get('videos/views/{id}', [VideosController::class, 'showViews']);
+Route::post('videos/upload', [VideosController::class, 'upload']);
 
 /*rutas de los status de likes */
 Route::post('status', [StatusController::class, 'store']);
