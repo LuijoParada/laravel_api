@@ -60,6 +60,7 @@ class VideosController extends Controller
     }
 
     public function upload(Request $request)
+    // example subida de videos
     {
         if ($request->hasFile('file')) {
             $file = $request->file('file');
