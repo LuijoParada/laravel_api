@@ -58,11 +58,15 @@ class VideosController extends Controller
         ];
         return response()->json($data, 200);
     }
-
+    //funcion para subir videos 
     public function upload(Request $request)
-    // example subida de videos
     {
-        if ($request->hasFile('file')) {
+        //se verifica si se subieron los archivos del video y la imagen
+        if (!$request->hasFile('file') || !$request->hasFile('thumbnail')) {
+            return response()->json(['message' => 'No file uploaded'], 400);
+        }
+        
+        //se obtiene el archivo del video y se guarda en la carpeta public/videos
             $file = $request->file('file');
             $filename = $file->getClientOriginalName();
 
@@ -71,13 +75,34 @@ class VideosController extends Controller
 
             $extension = $file->getClientOriginalExtension();
 
-            $picture = date('His') . '-' . $name_file . '.' . $extension;
-            $file->move(public_path('videos'), $picture);
+            $video = date('His') . '-' . $name_file . '.' . $extension;
+            $file->move(public_path('videos'), $video);
 
+        //se obtiene el archivo de la imagen y se guarda en la carpeta public/thumbnails
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailname = $thumbnail->getClientOriginalName();
+
+            $thumbnailname = pathinfo($thumbnailname, PATHINFO_FILENAME);
+            $name_thumbnail = str_replace(' ', '_', $thumbnailname);
+
+            $extension_thumbnail = $thumbnail->getClientOriginalExtension();
+
+            $picture_thumbnail = date('His') . '-' . $name_thumbnail . '.' . $extension_thumbnail;
+            $thumbnail->move(public_path('thumbnails'), $picture_thumbnail);
+            
+        //guardar en la base de datos la informacion del video y la ruta del video que se guardo en la carpeta public/videos
+            $video = Videos::create([
+                'video_name' => $request->video_name,
+                'description' => $request->description,
+                'url' => 'videos/'.$video,
+                'thumbnail' => 'thumbnails/'.$picture_thumbnail,
+                'likes' => 0,
+                'dislikes' => 0,
+                'views' => 0,
+                'id_usuario' => $request->id_usuario
+            ]);
             return response()->json(['response' => $request], 200);
-        }
 
-        return response()->json(['message' => 'No file uploaded'], 400);
     }
 
     /*funcion para actualizar */
