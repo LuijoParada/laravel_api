@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\VideosCpntroller;
+use App\Models\Videos;
 
 class VideosController extends Controller
 {
@@ -91,14 +91,14 @@ class VideosController extends Controller
             $thumbnail->move(public_path('thumbnails'), $picture_thumbnail);
             
         //guardar en la base de datos la informacion del video y la ruta del video que se guardo en la carpeta public/videos
-            $video = Videos::create([
+            $vid = Videos::create([
                 'video_name' => $request->video_name,
                 'description' => $request->description,
-                'url' => 'videos/'.$video,
-                'thumbnail' => 'thumbnails/'.$picture_thumbnail,
-                'likes' => 0,
-                'dislikes' => 0,
-                'views' => 0,
+                'url' => $video,
+                'thumbnail' => $picture_thumbnail,
+                'likes' => $request->likes,
+                'dislikes' =>  $request->dislikes,
+                'views' => $request->views,
                 'id_usuario' => $request->id_usuario
             ]);
             return response()->json(['response' => $request], 200);
@@ -155,5 +155,15 @@ class VideosController extends Controller
             'status'=> 200
         ];
         return response()->json($data, 200);
+    }
+    //funcion para mostrar el archivo de video cuyo nombre se pasa por parametro y se encuentra en la carpeta public/videos
+    public function showVideoFile($video){
+        $path = public_path('videos/'.$video);
+        return response()->file($path);
+    }
+    //funcion para mostrar el archivo de imagen cuyo nombre se pasa por parametro y se encuentra en la carpeta public/thumbnails
+    public function showThumbnailFile($thumbnail){
+        $path = public_path('thumbnails/'.$thumbnail);
+        return response()->file($path);
     }
 }

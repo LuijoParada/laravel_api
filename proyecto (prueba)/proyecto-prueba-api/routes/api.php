@@ -33,7 +33,8 @@ Route::get('videos/likes/{id}', [VideosController::class, 'showLikes']);
 Route::get('videos/dislikes/{id}', [VideosController::class, 'showDislikes']);
 Route::get('videos/views/{id}', [VideosController::class, 'showViews']);
 Route::post('videos/upload', [VideosController::class, 'upload']);
-
+Route::get('videos/show/{id}', [VideosController::class, 'showVideoFile']);
+Route::get('videos/showthumb/{id}', [VideosController::class, 'showThumbnailFile']);
 /*rutas de los status de likes */
 Route::post('status', [StatusController::class, 'store']);
 Route::put('status/{id}', [StatusController::class, 'update']);
