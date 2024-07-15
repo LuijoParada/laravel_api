@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\StyleconfigController;
 
 use App\Http\Controllers\Api\VideosController;
 use App\Http\Controllers\Api\StatusController;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\Api\ComentariosController;
 
 /*Rutas de usuarios */
 Route::get('usuarios', [UsuariosController::class, 'index']);
@@ -42,3 +44,11 @@ Route::get('status/{id_video}/{id_usuario}', [StatusController::class, 'show']);
 Route::delete('status/{id_video}', [StatusController::class, 'destroy']);
 Route::delete('status/{id_usuario}', [StatusController::class, 'destroyuser']);
 
+//Rutas para los comentarios
+Route::get('comentarios', [ComentariosController::class, 'index']);
+Route::get('comentarios/{id}', [ComentariosController::class, 'show']);
+Route::get('comentarios/video/{videoId}', [ComentariosController::class, 'showFromVideo']);
+Route::post('comentarios', [ComentariosController::class, 'store']);
+Route::delete('comentarios/{id}', [ComentariosController::class, 'destroy']);
+
+Route::post('/send-mail', [MailController::class, 'sendEmail']);
